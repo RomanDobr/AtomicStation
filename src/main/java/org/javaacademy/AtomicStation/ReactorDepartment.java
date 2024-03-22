@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 public class ReactorDepartment {
     private boolean isWork = false;
     private int countStart;
-    public static final int COUNT_ENERGY = 10_000_000;
+    private static final int COUNT_ENERGY = 10_000_000;
 
-    protected int run() throws ReactorWorkException, NuclearFuelIsEmptyException {
+    public int run() throws ReactorWorkException, NuclearFuelIsEmptyException {
         if (isWork) {
             throw new ReactorWorkException("Реактор уже работает");
         }
