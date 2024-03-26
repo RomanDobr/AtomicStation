@@ -7,13 +7,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class SecutiryDepartment {
     private int accidentCountPeriod;
-    private NuclearStation nuclearStation;
-
-    @Autowired
     @Lazy
-    public SecutiryDepartment(NuclearStation nuclearStation) {
-        this.nuclearStation = nuclearStation;
-    }
+    @Autowired
+    private NuclearStation nuclearStation;
 
     public void addAccident() {
         accidentCountPeriod++;
