@@ -1,3 +1,5 @@
+country:
+  name: France
 currency:
-  name: euro
+  name: EURO
   value: 0.5

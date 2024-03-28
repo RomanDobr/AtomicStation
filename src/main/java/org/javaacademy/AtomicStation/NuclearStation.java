@@ -1,5 +1,7 @@
 package org.javaacademy.AtomicStation;
 
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.javaacademy.AtomicStation.nuclearexception.NuclearFuelIsEmptyException;
 import org.javaacademy.AtomicStation.nuclearexception.ReactorWorkException;
@@ -7,28 +9,27 @@ import org.springframework.stereotype.Component;
 import java.util.stream.IntStream;
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class NuclearStation {
-
+    @NonNull
     private ReactorDepartment reactorDepartment;
+    @NonNull
     private SecutiryDepartment secutiryDepartment;
-    private FranceEconomicDepartment franceEconomicDepartment;
+    @NonNull
+    private EconomicDepartment economicDepartment;
     private long totalResult;
     private int accidentCountAllTime;
 
-    public NuclearStation(ReactorDepartment reactorDepartment,
-                          SecutiryDepartment secutiryDepartment,
-                          FranceEconomicDepartment franceEconomicDepartment) {
-        this.reactorDepartment = reactorDepartment;
-        this.secutiryDepartment = secutiryDepartment;
-        this.franceEconomicDepartment = franceEconomicDepartment;
-    }
 
     private void startYear() {
         log.info("Атомная станция начала работу");
         IntStream.range(0, 365).forEach(i -> totalResult += helperStartYear());
         reactorDepartment.setCountStart(0);
-        log.info("Атомная станция закончила работу. За год Выработано {} киловатт/часов\n", totalResult);
+        log.info("Атомная станция закончила работу. За год Выработано {} киловатт/часов", totalResult);
         log.warn("Количество инцидентов за год: " + secutiryDepartment.getCountAccidents());
+        log.info("Доход за год составил {} {}\n",
+                economicDepartment.computeYearIncomes(totalResult),
+                economicDepartment.getCurrency());
         secutiryDepartment.reset();
     }
 
@@ -47,6 +48,8 @@ public class NuclearStation {
     }
 
     public void start(int year) {
+        log.info("\n");
+        log.info("Действие происходит в стране: {} \n", economicDepartment.getCountry());
         IntStream.range(0, year).forEach(i -> startYear());
         log.warn("Количество инцидентов за всю работу станции: " + this.getAccidentCountAllTime());
     }

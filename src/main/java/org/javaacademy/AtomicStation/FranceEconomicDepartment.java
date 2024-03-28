@@ -1,27 +1,25 @@
 package org.javaacademy.AtomicStation;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 @Component
 @Profile("france")
 public class FranceEconomicDepartment extends EconomicDepartment {
-
-
-
-//    public FranceEconomicDepartment(String currency, double cena) {
-//        this.currency = currency;
-//        this.cena = cena;
-//    }
+    private static final long RATE = 1_000_000_000L;
 
     @Override
-    BigDecimal computeYearIncomes(long countElectricity) {
-        return new BigDecimal(1);
+    public BigDecimal computeYearIncomes(long countElectricity) {
+        long value = countElectricity / RATE;
+        long remainder = countElectricity - (value * RATE);
+        double total = 0.0;
+        for (long i = 0; i < value; i++) {
+            total += RATE * this.getCena() * Math.pow(0.99, i);
+        }
+        total += remainder * this.getCena() * Math.pow(0.99, value);
+        return  new BigDecimal(total).setScale(2, RoundingMode.HALF_UP);
     }
-
 }
