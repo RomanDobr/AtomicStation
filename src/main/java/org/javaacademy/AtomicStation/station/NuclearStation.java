@@ -1,12 +1,16 @@
-package org.javaacademy.AtomicStation;
+package org.javaacademy.AtomicStation.station;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.javaacademy.AtomicStation.department.EconomicDepartment;
+import org.javaacademy.AtomicStation.department.ReactorDepartment;
+import org.javaacademy.AtomicStation.department.SecutiryDepartment;
 import org.javaacademy.AtomicStation.nuclearexception.NuclearFuelIsEmptyException;
 import org.javaacademy.AtomicStation.nuclearexception.ReactorWorkException;
 import org.springframework.stereotype.Component;
 import java.util.stream.IntStream;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -21,7 +25,7 @@ public class NuclearStation {
     private int accidentCountAllTime;
 
 
-    private void startYear() {
+    public long startYear() {
         log.info("Атомная станция начала работу");
         IntStream.range(0, 365).forEach(i -> totalResult += helperStartYear());
         reactorDepartment.setCountStart(0);
@@ -31,6 +35,7 @@ public class NuclearStation {
                 economicDepartment.computeYearIncomes(totalResult),
                 economicDepartment.getCurrency());
         secutiryDepartment.reset();
+        return totalResult;
     }
 
     private long helperStartYear() {
@@ -54,7 +59,7 @@ public class NuclearStation {
         log.warn("Количество инцидентов за всю работу станции: " + this.getAccidentCountAllTime());
     }
 
-    public void incrementAccident (int count) {
+    public void incrementAccident(int count) {
         accidentCountAllTime += count;
     }
 
@@ -64,5 +69,9 @@ public class NuclearStation {
 
     public long getTotalResult() {
         return totalResult;
+    }
+
+    public void setTotalResult(long totalResult) {
+        this.totalResult = totalResult;
     }
 }

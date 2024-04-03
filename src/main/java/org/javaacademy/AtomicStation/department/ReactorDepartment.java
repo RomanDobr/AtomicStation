@@ -1,4 +1,4 @@
-package org.javaacademy.AtomicStation;
+package org.javaacademy.AtomicStation.department;
 
 import org.javaacademy.AtomicStation.nuclearexception.NuclearFuelIsEmptyException;
 import org.javaacademy.AtomicStation.nuclearexception.ReactorWorkException;
@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 public class ReactorDepartment {
     private boolean isWork = false;
     private int countStart;
-    private static final int COUNT_ENERGY = 10_000_000;
+    private static final long COUNT_ENERGY = 10_000_000L;
 
-    public int run() throws ReactorWorkException, NuclearFuelIsEmptyException {
+    public long run() throws ReactorWorkException, NuclearFuelIsEmptyException {
         if (isWork) {
             throw new ReactorWorkException("Реактор уже работает");
         }
@@ -22,7 +22,7 @@ public class ReactorDepartment {
         return COUNT_ENERGY;
     }
 
-    protected void stop() throws ReactorWorkException {
+    public void stop() throws ReactorWorkException {
         if (!isWork) {
             throw new ReactorWorkException("Реактор уже выключен");
         }

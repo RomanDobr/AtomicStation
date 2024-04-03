@@ -1,5 +1,6 @@
-package org.javaacademy.AtomicStation;
+package org.javaacademy.AtomicStation.department;
 
+import org.javaacademy.AtomicStation.station.NuclearStation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
